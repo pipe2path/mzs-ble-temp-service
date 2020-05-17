@@ -8,35 +8,25 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var tmpRouter = require('./routes/temperature');
 
-var app = express();
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+var express = require('express'),
+    app = express(),
+    port = process.env.PORT || 3075,
+    bodyParser = require('body-parser');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/temperature', tmpRouter);
 
-// catch 404 and forward to error handler
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// catch 404 and forward to error handler
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.listen(port);
 
-//module.exports = app;
-
-app.listen(process.env.PORT || 3075);
-console.log('mzs-ble-temp-service started on: 3075');
+console.log('menezes-service API Server started on: ', port);

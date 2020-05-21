@@ -1,15 +1,26 @@
+const con = require('../common/database.js');
 const log4js = require('log4js');
 const logger = log4js.getLogger();
 logger.level = 'debug';
 
 exports.get_all_temperatures = function(){
-    return 'All Temperatures';
+    let sql = "select * from reading";
+    return new Promise(function(resolve, reject){
+        con.query(sql, function(err, result) {
+            if (err)
+                reject(err);
+            else
+                resolve(result);
+        });
+    });
 }
 
 exports.post_temperature_reading = function(deviceId, value){
-    let success = false;
-
-    redis.set(deviceId, value);
-
-    return(success)
+    let datelocal = (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() -
+        ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
+    let sql = "insert reading (fahrenheit, datetimestamp) values ('" + value + "', '"  + datelocal + "')";
+    con.query(sql, function(err, result){
+        if (err) throw err;
+    })
+    return true;
 }

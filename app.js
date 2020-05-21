@@ -23,4 +23,4 @@ app.use(function(req, res, next) {
 
 app.listen(port);
 
-console.log('menezes-service API Server started on: ', port);
+console.log('ble-temperature-service API Server started on: ', port);

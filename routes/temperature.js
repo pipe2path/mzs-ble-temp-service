@@ -12,9 +12,9 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin','*');
-    let deviceId = req.query.deviceId;
-    let value = req.query.temperature;
-    let success = temperature.post_temperature_reading(deviceId, value)
+    let id = req.query.id;
+    let reading = req.query.reading;
+    let success = temperature.post_temperature_reading(id, reading)
     if (success)
         res.send("updated successfully");
 });

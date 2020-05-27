@@ -1,6 +1,7 @@
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var tmpRouter = require('./routes/temperature');
+var soilRouter = require('./routes/soil');
 
 var express = require('express'),
     app = express(),
@@ -10,6 +11,7 @@ var express = require('express'),
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/temperature', tmpRouter);
+app.use('/soil', soilRouter)
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

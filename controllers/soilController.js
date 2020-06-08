@@ -4,7 +4,7 @@ const logger = log4js.getLogger();
 logger.level = 'debug';
 
 exports.get_all_soil_readings = function(){
-    let sql = "select * from soil";
+    let sql = "select * from soil order by date_time_stamp desc";
     return new Promise(function(resolve, reject){
         con.query(sql, function(err, result) {
             if (err)
